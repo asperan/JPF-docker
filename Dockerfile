@@ -1,7 +1,19 @@
 FROM openjdk:8-jdk-buster
 
-ENV JPF_PATH $HOME/JPF
+RUN useradd -ms /bin/bash jpf
+
+USER jpf
+
+WORKDIR /home/jpf
+
+ENV JPF_PATH="/home/jpf/JPF"
 
 RUN git clone https://github.com/javapathfinder/jpf-core.git $JPF_PATH
 
-ENV PATH $JPF_PATH/bin:$PATH
+RUN ["/bin/bash", "-c", "$JPF_PATH/gradlew -c $JPF_PATH/settings.gradle"]
+
+RUN echo "$JPF_PATH/bin/jpf $@" > $HOME/jpf.sh
+
+RUN chmod +x "$HOME/jpf.sh"
+
+CMD ["/bin/bash", "-c", "while true; do sleep 3600; done"]
