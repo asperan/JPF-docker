@@ -7,7 +7,7 @@ docker run \
 -d \
 --name <container-name> \
 --mount type=bind,source="<source-dir>",target="/home/jpf/app" \
-jpf-docker
+alexsperanza/jpf-docker
 ```
 
 # Container console
